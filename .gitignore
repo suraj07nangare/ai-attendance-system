@@ -1,0 +1,30 @@
+# Environment
+.env
+venv/
+env/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Data / database (never commit real employee data)
+data/*.db
+data/*.db-journal
+data/*.sqlite3
+
+# InsightFace model cache
+.insightface/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/secrets.toml
