@@ -1,6 +1,6 @@
 
 
-```markdown
+
 # 🕒 AI Attendance System — Peaceful Organisation
 
 A self-contained, AI-powered attendance system that uses **real-time face recognition**
@@ -293,5 +293,5 @@ This system processes facial biometric data **solely** for attendance purposes:
 - Liveness detection to prevent photo spoofing
 
 ---
-```
+
 
