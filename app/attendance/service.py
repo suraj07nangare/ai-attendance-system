@@ -55,7 +55,7 @@ class AttendanceService:
             return AttendanceResult(AttendanceOutcome.COOLDOWN, "Already processed recently. Please wait a moment.")
 
         IST = ZoneInfo("Asia/Kolkata")
-        now = datetime.now()
+        now = datetime.now(IST) 
         today = now.strftime("%Y-%m-%d")
         now_time = now.strftime("%H:%M:%S")
 
