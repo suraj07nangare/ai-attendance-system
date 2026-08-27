@@ -4,9 +4,9 @@ import { api } from '../api.js'
 
 function StatCard({ label, value, accent }) {
   return (
-    <div className="bg-surface border border-border rounded-xl p-5">
+    <div className="card">
       <p className="text-xs uppercase tracking-widest text-muted font-mono mb-2">{label}</p>
-      <p className={`text-3xl font-bold ${accent ? 'text-accent' : 'text-fg'}`}>{value}</p>
+      <p className={`text-3xl font-semibold ${accent ? 'text-[var(--accent-strong)]' : ''}`}>{value}</p>
     </div>
   )
 }
@@ -19,15 +19,17 @@ export default function Dashboard() {
     api.dashboardStats().then(setStats).catch((e) => setError(e.message))
   }, [])
 
-  if (error) return <p className="text-accent2">{error}</p>
+  if (error) return <p className="text-[var(--accent-strong)]">{error}</p>
   if (!stats) return <p className="text-muted">Loading...</p>
 
   return (
     <div>
-      <h2 className="text-4xl font-bold mb-1">Dashboard</h2>
-      <p className="text-muted mb-8">Live attendance overview for today.</p>
+      <div className="mb-6">
+        <h2 className="text-3xl font-semibold mb-1">Dashboard</h2>
+        <p className="text-muted">Live attendance overview for today.</p>
+      </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
         <StatCard label="Employees" value={stats.total_employees} />
         <StatCard label="Present" value={stats.present_today} accent />
         <StatCard label="Absent" value={stats.absent_today} />
@@ -36,22 +38,22 @@ export default function Dashboard() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-surface border border-border rounded-xl p-5">
+        <div className="card">
           <p className="text-sm text-muted mb-4">7-Day Trend</p>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={stats.trend}>
-              <XAxis dataKey="attendance_date" stroke="#8A8A8E" fontSize={11} />
-              <YAxis stroke="#8A8A8E" fontSize={11} />
-              <Tooltip contentStyle={{ background: '#141416', border: '1px solid #232326' }} />
-              <Line type="monotone" dataKey="present_count" stroke="#39E27A" strokeWidth={2} dot={false} />
+              <XAxis dataKey="attendance_date" stroke="#94a3b8" fontSize={11} />
+              <YAxis stroke="#94a3b8" fontSize={11} />
+              <Tooltip contentStyle={{ background: 'white', border: '1px solid var(--border)' }} />
+              <Line type="monotone" dataKey="present_count" stroke="var(--accent)" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-surface border border-border rounded-xl p-5">
+        <div className="card">
           <p className="text-sm text-muted mb-4">Today's Attendance</p>
           <div className="overflow-auto max-h-56">
-            <table className="w-full text-sm">
+            <table className="table-min text-sm">
               <thead>
                 <tr className="text-muted text-left font-mono text-xs uppercase">
                   <th className="pb-2">Name</th>
@@ -62,11 +64,11 @@ export default function Dashboard() {
               </thead>
               <tbody>
                 {stats.today_records.map((r) => (
-                  <tr key={r.employee_id} className="border-t border-border">
+                  <tr key={r.employee_id} className="last:border-0">
                     <td className="py-2">{r.name}</td>
                     <td className="py-2">{r.check_in || '-'}</td>
                     <td className="py-2">{r.check_out || '-'}</td>
-                    <td className={`py-2 ${r.status === 'Late' ? 'text-accent2' : 'text-accent'}`}>{r.status}</td>
+                    <td className={`py-2 ${r.status === 'Late' ? 'text-[var(--accent-strong)]' : 'text-[var(--accent)]'}`}>{r.status}</td>
                   </tr>
                 ))}
               </tbody>
