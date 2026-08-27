@@ -1,3 +1,6 @@
+
+
+
 # 🕒 AI Attendance System — Peaceful Organisation
 
 A self-contained, AI-powered attendance system that uses **real-time face recognition**
@@ -9,7 +12,7 @@ no cloud dependency. Runs entirely offline on a single Windows laptop.
 ![InsightFace](https://img.shields.io/badge/InsightFace-Face%20Recognition-green)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey)
 
-🎥 **Demo Video:** [Watch here](#) *(https://drive.google.com/file/d/1OSPbKXmyzcQwjrO9kAMSGuIqmsL6U_uh/view?usp=sharing)*
+🎥 **[Watch the Demo Video](https://drive.google.com/file/d/1OSPbKXmyzcQwjrO9kAMSGuIqmsL6U_uh/view?usp=sharing)**
 
 ---
 
@@ -17,9 +20,7 @@ no cloud dependency. Runs entirely offline on a single Windows laptop.
 
 | Dashboard | Mark Attendance | Register Employee |
 |---|---|---|
-| ![img1](screenshots\image.png) | ![img2](screenshots\img2.png) | ![img3](screenshots\img3.png) |
-
-*(Add your screenshots to a `docs/screenshots/` folder and update the paths above)*
+| ![Dashboard](screenshots/image.png) | ![Mark Attendance](screenshots/img2.png) | ![Register Employee](screenshots/img3.png) |
 
 ---
 
@@ -84,11 +85,12 @@ filterable reports exportable to CSV.
 
 ## 🏗 Architecture
 
+```
 Webcam / Upload → OpenCV/PIL frame → InsightFace detection
-→ face embedding → cosine-similarity match against registered employees
-→ attendance service (check-in/check-out + late + cooldown rules)
-→ SQLite → Streamlit dashboard / reports → CSV export
-
+   → face embedding → cosine-similarity match against registered employees
+   → attendance service (check-in/check-out + late + cooldown rules)
+   → SQLite → Streamlit dashboard / reports → CSV export
+```
 
 The code is split into clean, testable layers:
 
@@ -107,40 +109,41 @@ unit-testable **without** loading a camera or a face model.
 
 ## 📁 Project Structure
 
+```
 ai-attendance-system/
 ├── app/
-│ ├── main.py # Streamlit entry point & navigation
-│ ├── config.py # Settings loaded from .env
-│ ├── database/
-│ │ ├── connection.py # SQLite connection + schema
-│ │ ├── models.py # Employee / AttendanceRecord dataclasses
-│ │ └── repository.py # All SQL queries
-│ ├── face/
-│ │ ├── detector.py # InsightFace wrapper (FaceEngine)
-│ │ ├── embeddings.py # Cosine similarity / best-match logic
-│ │ └── recognizer.py # Registration & recognition workflows
-│ ├── attendance/
-│ │ └── service.py # Check-in/out rules, late logic, cooldown
-│ ├── ui/
-│ │ ├── dashboard.py
-│ │ ├── registration.py
-│ │ ├── recognition.py
-│ │ ├── employees.py
-│ │ ├── records.py
-│ │ └── reports.py
-│ └── utils/
-│ └── helpers.py
-├── data/ # SQLite database lives here (gitignored)
+│   ├── main.py               # Streamlit entry point & navigation
+│   ├── config.py             # Settings loaded from .env
+│   ├── database/
+│   │   ├── connection.py     # SQLite connection + schema
+│   │   ├── models.py         # Employee / AttendanceRecord dataclasses
+│   │   └── repository.py     # All SQL queries
+│   ├── face/
+│   │   ├── detector.py       # InsightFace wrapper (FaceEngine)
+│   │   ├── embeddings.py     # Cosine similarity / best-match logic
+│   │   └── recognizer.py     # Registration & recognition workflows
+│   ├── attendance/
+│   │   └── service.py        # Check-in/out rules, late logic, cooldown
+│   ├── ui/
+│   │   ├── dashboard.py
+│   │   ├── registration.py
+│   │   ├── recognition.py
+│   │   ├── employees.py
+│   │   ├── records.py
+│   │   └── reports.py
+│   └── utils/
+│       └── helpers.py
+├── data/                      # SQLite database lives here (gitignored)
+├── screenshots/               # README images
 ├── tests/
-│ └── test_attendance.py
+│   └── test_attendance.py
 ├── .env.example
 ├── .gitignore
 ├── requirements.txt
 ├── README.md
-├── start.bat # One-click launcher (Windows)
+├── start.bat                  # One-click launcher (Windows)
 └── run.py
-
-
+```
 
 ---
 
@@ -290,4 +293,5 @@ This system processes facial biometric data **solely** for attendance purposes:
 - Liveness detection to prevent photo spoofing
 
 ---
+
 

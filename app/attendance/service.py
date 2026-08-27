@@ -11,7 +11,7 @@ from typing import Dict, Optional
 
 from app.config import settings
 from app.database import repository
-
+from zoneinfo import ZoneInfo
 
 class AttendanceOutcome:
     CHECKED_IN = "checked_in"
@@ -54,7 +54,8 @@ class AttendanceService:
         if self._in_cooldown(employee_id):
             return AttendanceResult(AttendanceOutcome.COOLDOWN, "Already processed recently. Please wait a moment.")
 
-        now = datetime.now()
+        IST = ZoneInfo("Asia/Kolkata")
+        now = datetime.now(IST) 
         today = now.strftime("%Y-%m-%d")
         now_time = now.strftime("%H:%M:%S")
 
