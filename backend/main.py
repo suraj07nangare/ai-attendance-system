@@ -14,6 +14,12 @@ from app.face.recognizer import register_employee, recognize_face, RegistrationS
 from app.attendance.service import get_attendance_service
 from app.utils.helpers import today_str
 
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from app.face.detector import get_face_engine
+
+
+
 app = FastAPI(title="AI Attendance API")
 
 app.add_middleware(
@@ -34,6 +40,14 @@ def _file_to_bgr(data: bytes) -> np.ndarray:
     image = Image.open(BytesIO(data)).convert("RGB")
     return np.array(image)[:, :, ::-1].copy()
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: preload the InsightFace model before accepting requests
+    get_face_engine()
+    yield
+    # Shutdown: nothing to clean up
+
+app = FastAPI(title="AI Attendance API", lifespan=lifespan)
 
 @app.get("/api/health")
 def health():
