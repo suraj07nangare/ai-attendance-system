@@ -20,7 +20,6 @@ from app.face.detector import get_face_engine
 
 
 
-app = FastAPI(title="AI Attendance API")
 
 app.add_middleware(
     CORSMiddleware,
